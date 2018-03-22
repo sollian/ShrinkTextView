@@ -21,11 +21,13 @@ import android.widget.TextView;
 public class ShrinkTextView extends TextView {
     private static final int HIGHLIGHT_COLOR_RES_ID = 0x3e609e;
 
-    private int curMaxLines;
     private boolean isPrepared;
     private int color;
     private CharSequence originText;
     private boolean isRefreshingText;
+
+    private int curMaxLines;
+    private int lastMaxLine;
 
     public ShrinkTextView(Context context) {
         super(context);
@@ -39,6 +41,11 @@ public class ShrinkTextView extends TextView {
         super(context, attrs, defStyleAttr);
     }
 
+    public void toggle() {
+        setMaxLines(lastMaxLine);
+        setText(originText);
+    }
+
     @Override
     public void setMaxLines(int maxlines) {
         super.setMaxLines(maxlines);
@@ -49,9 +56,9 @@ public class ShrinkTextView extends TextView {
     public void setText(CharSequence text, TextView.BufferType type) {
         setEllipsize(TextUtils.TruncateAt.END);
         if (!isRefreshingText) {
-            if (TextUtils.equals(originText, text)) {
-                return;
-            }
+//            if (TextUtils.equals(originText, text)) {
+//                return;
+//            }
             originText = text;
         }
         super.setText(text, type);
@@ -70,6 +77,10 @@ public class ShrinkTextView extends TextView {
     private void innerRefresh(Canvas canvas) {
         if (curMaxLines <= 0) {
             curMaxLines = Integer.MAX_VALUE;
+        }
+
+        if (lastMaxLine <= 0) {
+            lastMaxLine = Integer.MAX_VALUE;
         }
 
         Layout layout = getLayout();
