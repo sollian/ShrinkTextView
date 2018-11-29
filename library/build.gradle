@@ -40,25 +40,27 @@ dependencies {
 //}
 
 ext{
-    bintrayRepo='test'
-    bintrayName='library'
+    bintrayRepo='ShrinkTextView'
+    bintrayName='ShrinkTextView'
 
     publishedGroupId='com.sollian.library'
-    libraryName='library'
-    artifact='library'
+    libraryName='ShrinkTextView'
+    artifact='ShrinkTextView'
 
-    libraryDescription='library demo'
-    siteUrl=''
-    gitUrl=''
+    libraryDescription='ShrinkTextView demo'
+    siteUrl='https://github.com/sollian/ShrinkTextView'
+    gitUrl='https://github.com/sollian/ShrinkTextView.git'
     libraryVersion='1.0.0'
     developerId='sollian'
     developerName='sollian'
     developerEmail='sollian@qq.com'
 
-    licenseName=''
-    licenseUrl=''
-    allLicenses=''
+    licenseName = 'The Apache Software License, Version 2.0'
+    licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+    allLicenses = ["Apache-2.0"]
 }
 
 apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/installv1.gradle'
 apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/bintrayv1.gradle'
+
+task bintray(dependsOn: [install, bintrayUpload])
