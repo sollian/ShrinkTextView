@@ -1,4 +1,4 @@
-package demo.sollian.com.shrinktextview;
+package com.sollian.library;
 
 import android.content.Context;
 import android.graphics.Canvas;
