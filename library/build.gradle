@@ -40,7 +40,7 @@ dependencies {
 //}
 
 ext{
-    bintrayRepo='ShrinkTextView'
+    bintrayRepo='maven'
     bintrayName='ShrinkTextView'
 
     publishedGroupId='com.sollian.library'
