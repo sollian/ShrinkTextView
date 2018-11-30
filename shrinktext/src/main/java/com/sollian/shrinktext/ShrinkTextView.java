@@ -1,9 +1,8 @@
-package demo.sollian.com.shrinktextview;
+package com.sollian.shrinktext;
 
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
-import android.support.annotation.Nullable;
 import android.text.Editable;
 import android.text.Layout;
 import android.text.SpannableString;
@@ -12,14 +11,13 @@ import android.text.Spanned;
 import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.widget.TextView;
 
 /**
  * @author lishouxian on 2017/12/11.
  */
 public class ShrinkTextView extends TextView {
-    private static final int HIGHLIGHT_COLOR_RES_ID = 0x3e609e;
+    private static final int COLOR_HIGHLIGHT = 0xff0099cc;
 
     private boolean isPrepared;
     private int color;
@@ -33,11 +31,11 @@ public class ShrinkTextView extends TextView {
         super(context);
     }
 
-    public ShrinkTextView(Context context, @Nullable AttributeSet attrs) {
+    public ShrinkTextView(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public ShrinkTextView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+    public ShrinkTextView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
 
@@ -49,11 +47,12 @@ public class ShrinkTextView extends TextView {
     @Override
     public void setMaxLines(int maxlines) {
         super.setMaxLines(maxlines);
+        lastMaxLine = curMaxLines;
         curMaxLines = maxlines;
     }
 
     @Override
-    public void setText(CharSequence text, TextView.BufferType type) {
+    public void setText(CharSequence text, BufferType type) {
         setEllipsize(TextUtils.TruncateAt.END);
         if (!isRefreshingText) {
 //            if (TextUtils.equals(originText, text)) {
@@ -78,7 +77,6 @@ public class ShrinkTextView extends TextView {
         if (curMaxLines <= 0) {
             curMaxLines = Integer.MAX_VALUE;
         }
-
         if (lastMaxLine <= 0) {
             lastMaxLine = Integer.MAX_VALUE;
         }
@@ -114,7 +112,6 @@ public class ShrinkTextView extends TextView {
             textInlastLineSuffix = addSuffix(textInLastLine);
             wLastLineEllipsis = paint.measureText(textInlastLineSuffix.toString());
         }
-        Log.e("---", textInLastLine.toString());
 
         Editable result = new SpannableStringBuilder(textBeforeLastLine);
         result.append(textInlastLineSuffix);
@@ -131,7 +128,7 @@ public class ShrinkTextView extends TextView {
         SpannableString ss = new SpannableString("全部");
 
         if (color == 0) {
-            color = getResources().getColor(HIGHLIGHT_COLOR_RES_ID);
+            color = COLOR_HIGHLIGHT;
         }
         ForegroundColorSpan colorSpan = new ForegroundColorSpan(color);
         ss.setSpan(colorSpan, 0, ss.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
