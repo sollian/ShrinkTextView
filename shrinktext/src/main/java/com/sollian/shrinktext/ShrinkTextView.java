@@ -42,6 +42,7 @@ public class ShrinkTextView extends TextView {
     public void toggle() {
         setMaxLines(lastMaxLine);
         setText(originText);
+        requestLayout();
     }
 
     @Override
