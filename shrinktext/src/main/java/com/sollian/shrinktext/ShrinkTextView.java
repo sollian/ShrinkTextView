@@ -19,7 +19,6 @@ import android.widget.TextView;
 public class ShrinkTextView extends TextView {
     private static final int COLOR_HIGHLIGHT = 0xff0099cc;
 
-    private boolean isPrepared;
     private int color;
     private CharSequence originText;
     private boolean isRefreshingText;
@@ -66,15 +65,6 @@ public class ShrinkTextView extends TextView {
 
     @Override
     protected void onDraw(Canvas canvas) {
-        if (isPrepared) {
-            isPrepared = false;
-            super.onDraw(canvas);
-        } else {
-            innerRefresh(canvas);
-        }
-    }
-
-    private void innerRefresh(Canvas canvas) {
         if (curMaxLines <= 0) {
             curMaxLines = Integer.MAX_VALUE;
         }
@@ -84,6 +74,7 @@ public class ShrinkTextView extends TextView {
 
         Layout layout = getLayout();
         if (layout == null) {
+            super.onDraw(canvas);
             return;
         }
 
@@ -91,8 +82,7 @@ public class ShrinkTextView extends TextView {
 
         int textLines = layout.getLineCount();
         if (textLines < curMaxLines || layout.getEllipsisCount(textLines - 1) == 0) {
-            isPrepared = true;
-            invalidate();
+            super.onDraw(canvas);
             return;
         }
 
@@ -101,6 +91,7 @@ public class ShrinkTextView extends TextView {
         CharSequence textInLastLine = charSequence.subSequence(lastLineStart,
                 lastLineStart + layout.getEllipsisStart(textLines - 1));
         if (TextUtils.isEmpty(textInLastLine)) {
+            super.onDraw(canvas);
             return;
         }
 
