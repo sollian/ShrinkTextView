@@ -82,6 +82,7 @@ public class ShrinkTextView extends TextView {
 
         int textLines = layout.getLineCount();
         if (textLines < curMaxLines || layout.getEllipsisCount(textLines - 1) == 0) {
+            //行数不足最大行，或者最后一行没有被省略，说明当前文本被完全展示
             super.onDraw(canvas);
             return;
         }
@@ -90,10 +91,10 @@ public class ShrinkTextView extends TextView {
         CharSequence textBeforeLastLine = charSequence.subSequence(0, lastLineStart);
         CharSequence textInLastLine = charSequence.subSequence(lastLineStart,
                 lastLineStart + layout.getEllipsisStart(textLines - 1));
-        if (TextUtils.isEmpty(textInLastLine)) {
-            super.onDraw(canvas);
-            return;
-        }
+//        if (TextUtils.isEmpty(textInLastLine)) {
+//            super.onDraw(canvas);
+//            return;
+//        }
 
         Paint paint = layout.getPaint();
         CharSequence textInlastLineSuffix = addSuffix(textInLastLine);
